@@ -3,22 +3,14 @@ import json
 import numpy as np
 import pandas as pd
 
-import asyncio
-import time
+path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/b1"
 
 def min_max(arr):
     return (arr-np.min(arr))/(np.max(arr)-np.min(arr))
 
-def background(f):
-    def wrapped(*args, **kwargs):
-        return asyncio.get_event_loop().run_in_executor(None, f, *args, **kwargs)
-    return wrapped
-
-@background
 def extract_projection(s):
     # read PROCAR file
-    time.sleep(2)
-    with open(os.path.join("files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/", s, "PROCAR")) as file:
+    with open(os.path.join(path, s, "PROCAR")) as file:
         lines = file.readlines()
         band_ids = [lines.index(line) for line in lines if "energy" in line]
         ion_num = int(lines[1].split()[-1])
@@ -44,14 +36,15 @@ def extract_projection(s):
     return {s_id: ion_weight.tolist()}
 
 if __name__ == '__main__':
-    qmof = os.listdir("files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files")
+    qmof = os.listdir(path)
     print("Get structure list. ")
     
-    loop = asyncio.get_event_loop()                                              # Have a new event loop
-    looper = asyncio.gather(*[extract_projection(q) for q in qmof]) 
-    weights = loop.run_until_complete(looper)
+    weights = {}
+    for q in qmof:
+        print(qmof.index(q), end=' : ')
+        weights.update(extract_projection(q))
 
     weights_object = json.dumps(weights, indent=4)
-    with open("files/qmof_expl_ref.json", "w") as file:
+    with open("files/qmof_expl_ref1.json", "w") as file:
         file.write(weights_object)
  
