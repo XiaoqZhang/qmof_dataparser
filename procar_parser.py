@@ -2,6 +2,7 @@ import os
 import json
 import numpy as np
 import pandas as pd
+import concurrent.futures
 
 def min_max(arr):
     return (arr-np.min(arr))/(np.max(arr)-np.min(arr))
@@ -37,9 +38,11 @@ if __name__ == '__main__':
     qmof = os.listdir("files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files")
     
     weights = {}
-    for q in qmof:
-        print(qmof.index(q), end = ' : ')
-        weights.update(extract_projection(q))
+
+    with concurrent.futures.ProcessPoolExecutor(max_workers=8) as executor:
+        result = list(executor.map(extract_projection, qmof))
+    for r in result:
+        weights.update(r)
     
     weights_object = json.dumps(weights, indent=4)
     with open("files/qmof_expl_ref.json", "w") as file:
