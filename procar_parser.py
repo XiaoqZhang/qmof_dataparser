@@ -25,7 +25,11 @@ def extract_projection(s):
     # change name to qmof_id
     with open("qmof.json") as file:
         qmof_data = pd.read_json(file)
-    s_id = qmof_data[qmof_data["name"] == s]["qmof_id"].item()
+    if len(qmof_data[qmof_data["name"] == s]["qmof_id"]) != 0:
+        s_id = qmof_data[qmof_data["name"] == s]["qmof_id"].item()
+    else:
+        s_id = s
+    print(s_id)
 
     return {s_id: ion_weight.tolist()}
 
@@ -34,6 +38,7 @@ if __name__ == '__main__':
     
     weights = {}
     for q in qmof:
+        print(qmof.index(q), end = ' : ')
         weights.update(extract_projection(q))
     
     weights_object = json.dumps(weights, indent=4)
