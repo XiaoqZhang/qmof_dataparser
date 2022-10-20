@@ -7,4 +7,4 @@
 
 module purge
 
-srun /home/xiazhang/anaconda3/envs/ml/bin/python ../procar_parser.py
+srun /home/xiazhang/anaconda3/envs/ml/bin/python procar_parser.py
