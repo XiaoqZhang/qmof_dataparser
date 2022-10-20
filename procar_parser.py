@@ -1,6 +1,7 @@
 import os
 import json
 import numpy as np
+import pandas as pd
 
 def min_max(arr):
     return (arr-np.min(arr))/(np.max(arr)-np.min(arr))
@@ -21,7 +22,12 @@ def extract_projection(s):
     # normalization
     ion_weight = min_max(np.mean(site_atts, axis=0))
 
-    return {s: ion_weight.tolist()}
+    # change name to qmof_id
+    with open("qmof.json") as file:
+        qmof_data = pd.read_json(file)
+    s_id = qmof_data[qmof_data["name"] == s]["qmof_id"].item()
+
+    return {s_id: ion_weight.tolist()}
 
 if __name__ == '__main__':
     qmof = os.listdir("files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files")
