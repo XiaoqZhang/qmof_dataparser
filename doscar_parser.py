@@ -44,6 +44,7 @@ def dos_checker(s):
     ax.set_ylabel("Density of states")
     ax.set_title("%s" %qmof_id)
     fig.savefig("files/dos_plots/b1/%s.png" %qmof_id)
+    plt.close(fig)
 
     return flag
 
