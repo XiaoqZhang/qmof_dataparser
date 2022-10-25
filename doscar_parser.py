@@ -5,8 +5,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 plt.rcParams["font.size"] = 17
 
-path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/"
-
 
 def dos_checker(s):
     # read bandgap
@@ -45,12 +43,13 @@ def dos_checker(s):
     ax.set_xlabel("$E-E_{Fermi}\ /\ eV$")
     ax.set_ylabel("Density of states")
     ax.set_title("%s" %qmof_id)
-    fig.savefig("files/dos_plots/%s.png" %qmof_id)
+    fig.savefig("files/dos_plots/b1/%s.png" %qmof_id)
 
     return flag
 
 
 if __name__ == '__main__':
+    path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/b1"
     qmof = os.listdir(path)
     print("Get structure list. ")
     

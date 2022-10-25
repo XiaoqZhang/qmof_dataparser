@@ -6,3 +6,4 @@ curl "http://nomad-lab.eu/prod/rae/api/raw/query?upload_id=EIDyjluDQ3eZnt-gI7Fc4
 python procar_parser.py
 
 # You can run the commands on fidis using scripts in bash_scripts
+submit the bash script in this folder by ``` sbatch bash_scripts/run_<python_program>.sh ```
