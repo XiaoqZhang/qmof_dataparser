@@ -32,14 +32,14 @@ for i in range(len(mofs)):
     dos_data_bg = dos_data[(dos_data[:,0] > efermi) & (dos_data[:,0] < efermi+bandgap)]
 
     if dos_data_bg.shape[0] == 0:
-        print(i, ": ", m, ", bandgap - ", bandgap)
+        print(i, ": ", mofs[i], ", bandgap - ", bandgap)
     if dos_data_bg.shape[1] == 3:
         if dos_data_bg[-1, 0] == 0:
-            print(i, ": ", m)
+            print(i, ": ", mofs[i])
         else: print(i)
     else:
         if (dos_data_bg[-1, 0] == 0) & (dos_data_bg[-1, 1] == 0):
-            print(i, ": ", m)
+            print(i, ": ", mofs[i])
         else: print(i)
 
     '''
