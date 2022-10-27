@@ -3,16 +3,17 @@ import json
 import numpy as np
 import pandas as pd
 
-with open("files/mofs_with_peaks") as f:
-    mofs_peak = [l.split()[0] for l in f.readlines()]
-
 with open("qmof.json") as file:
     qmof_data = json.load(file)
     qmof_df = pd.json_normalize(qmof_data).set_index("qmof_id")
 
+'''
+with open("files/mofs_with_peaks") as f:
+    mofs_peak = [l.split()[0] for l in f.readlines()]
 for m in mofs_peak:
     dos_path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/%s/DOSCAR" %m
-    bandgap = qmof_df[qmof_df["name"]==s]["outputs.pbe.bandgap"].item()
+    bandgap = qmof_df[qmof_df["name"]==m]["outputs.pbe.bandgap"].item()
+'''
 
 mofs = os.listdir("files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/")
 for i in range(len(mofs)):
