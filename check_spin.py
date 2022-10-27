@@ -15,8 +15,8 @@ for m in mofs_peak:
     bandgap = qmof_df[qmof_df["name"]==s]["outputs.pbe.bandgap"].item()
 
 mofs = os.listdir("files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/")
-for m in mofs:
-    dos_path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/%s/DOSCAR" %m
+for i in range(len(mofs)):
+    dos_path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/%s/DOSCAR" %mofs[i]
     with open(dos_path) as file:
         lines = file.readlines()
         e_info = [float(i) for i in lines[5].split()]
@@ -29,10 +29,12 @@ for m in mofs:
 
     if dos_data_bg.shape[1] == 3:
         if dos_data_bg[-1, 0] == 0:
-            print(m)
+            print(i, ": ", m)
+        else: print(i)
     else:
         if (dos_data_bg[-1, 0] == 0) & (dos_data_bg[-1, 1] == 0):
-            print(m)
+            print(i, ": ", m)
+        else: print(i)
 
     '''
     atom_dos_bg = atom_dos_data[(atom_dos_data[:,:,0] > efermi) & (atom_dos_data[:,:,0] < efermi+bandgap)]
