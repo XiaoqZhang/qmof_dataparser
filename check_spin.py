@@ -1,4 +1,5 @@
 # Check the MOFs selected by doscar_parser.py turn on SPIN or not
+import os
 import json
 import numpy as np
 import pandas as pd
@@ -20,6 +21,7 @@ for i in range(len(mofs)):
     dos_path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/%s/DOSCAR" %mofs[i]
     with open(dos_path) as file:
         lines = file.readlines()
+        nions = int(lines[0].split()[1])
         e_info = [float(i) for i in lines[5].split()]
         e_min, e_max, nedos, efermi = e_info[0], e_info[1], int(e_info[2]), e_info[3]
         dos_data = np.array([[float(x) for x in l.split()] for l in lines[6:6+nedos]])
