@@ -6,7 +6,7 @@ import pandas as pd
 
 
 with open("files/mofs_with_peaks") as f:
-    mofs_peak = [l.split() for l in f.readlines()]
+    mofs_peak = [l.split()[0] for l in f.readlines()]
 
 with open("qmof.json") as file:
     qmof_data = json.load(file)
