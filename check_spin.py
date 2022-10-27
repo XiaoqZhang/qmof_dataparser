@@ -35,11 +35,11 @@ for i in range(len(mofs)):
         print(i, ": ", mofs[i], ", bandgap - ", bandgap)
     else:
         if dos_data_bg.shape[1] == 3:
-            if dos_data_bg[-1, 0] == 0:
+            if dos_data_bg[-1, 1] != 0:
                 print(i, ": ", mofs[i])
             else: print(i)
         else:
-            if (dos_data_bg[-1, 0] == 0) & (dos_data_bg[-1, 1] == 0):
+            if (dos_data_bg[-1, 1] != 0) or (dos_data_bg[-1, 2] != 0):
                 print(i, ": ", mofs[i])
             else: print(i)
 
