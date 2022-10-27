@@ -13,7 +13,7 @@ with open("qmof.json") as file:
     qmof_df = pd.json_normalize(qmof_data).set_index("qmof_id")
 
 for m in mofs_peak:
-    dos_path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/%s" %m
+    dos_path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/%s/DOSCAR" %m
     with open(dos_path) as file:
         lines = file.readlines()
         dos_data = np.array([[float(x) for x in l.split()] for l in lines[6:6+nedos]])
