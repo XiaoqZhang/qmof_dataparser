@@ -33,14 +33,15 @@ for i in range(len(mofs)):
 
     if dos_data_bg.shape[0] == 0:
         print(i, ": ", mofs[i], ", bandgap - ", bandgap)
-    if dos_data_bg.shape[1] == 3:
-        if dos_data_bg[-1, 0] == 0:
-            print(i, ": ", mofs[i])
-        else: print(i)
     else:
-        if (dos_data_bg[-1, 0] == 0) & (dos_data_bg[-1, 1] == 0):
-            print(i, ": ", mofs[i])
-        else: print(i)
+        if dos_data_bg.shape[1] == 3:
+            if dos_data_bg[-1, 0] == 0:
+                print(i, ": ", mofs[i])
+            else: print(i)
+        else:
+            if (dos_data_bg[-1, 0] == 0) & (dos_data_bg[-1, 1] == 0):
+                print(i, ": ", mofs[i])
+            else: print(i)
 
     '''
     atom_dos_bg = atom_dos_data[(atom_dos_data[:,:,0] > efermi) & (atom_dos_data[:,:,0] < efermi+bandgap)]
