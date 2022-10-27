@@ -19,6 +19,7 @@ for m in mofs_peak:
 mofs = os.listdir("files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/")
 for i in range(len(mofs)):
     dos_path = "files/EIDyjluDQ3eZnt-gI7Fc4Q/vasp_files/%s/DOSCAR" %mofs[i]
+    bandgap = qmof_df[qmof_df["name"]==mofs[i]]["outputs.pbe.bandgap"].item()
     with open(dos_path) as file:
         lines = file.readlines()
         nions = int(lines[0].split()[1])
