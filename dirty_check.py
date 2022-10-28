@@ -35,12 +35,12 @@ for i in range(len(mofs)):
         print(i, ": ", mofs[i], ", bandgap - ", bandgap)
     else:
         if dos_data_bg.shape[1] == 3:
-            if dos_data_bg[-1, 1] != 0:
-                print(i, ": ", mofs[i])
+            if np.sum(dos_data_bg, axis=0)[1] > 1:
+                print(i, ": ", mofs[i], "off")
             else: print(i)
         else:
-            if (dos_data_bg[-1, 1] != 0) or (dos_data_bg[-1, 2] != 0):
-                print(i, ": ", mofs[i])
+            if (np.sum(dos_data_bg, axis=0)[1] > 1) or (np.sum(dos_data_bg, axis=0)[2] > 1):
+                print(i, ": ", mofs[i], "on")
             else: print(i)
 
     '''
