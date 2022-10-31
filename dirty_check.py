@@ -3,12 +3,15 @@ import os
 import json
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def min_max(arr):
     return (arr-np.min(arr))/(np.max(arr)-np.min(arr))
 
 weights = {}
 result = []
+
+thre = 0.1
 
 with open("qmof.json") as file:
     qmof_data = json.load(file)
@@ -50,7 +53,11 @@ for i in range(len(mofs)):
                 weights.update({qmof_id: np.array([0]*nions).tolist()})
             else:
                 atom_attr = np.sum(atom_bg_sum, axis=1) / np.sum(dos_data_bg, axis=0)[1]
-                weights.update({qmof_id: min_max(atom_attr).tolist()})
+                if sum(atom_attr < thre) == nions:
+                    peak = 0
+                    weights.update({qmof_id: np.array([0]*nions).tolist()})
+                else:
+                    weights.update({qmof_id: min_max(atom_attr).tolist()})
         else:
             peak_up = np.sum(dos_data_bg, axis=0)[1]
             peak_down = np.sum(dos_data_bg, axis=0)[2]
@@ -69,7 +76,12 @@ for i in range(len(mofs)):
                 down_attr = np.sum(np.sum(atom_dos_bg[:,:,down], axis=2), axis=1)/np.sum(dos_data_bg, axis=0)[2]
             
             atom_attr = up_attr + down_attr
-            weights.update({qmof_id: min_max(atom_attr).tolist()})
+
+            if sum(atom_attr < 2*thre) == nions:
+                peak = 0
+                weights.update({qmof_id: np.array([0]*nions).tolist()})
+            else:
+                weights.update({qmof_id: min_max(atom_attr).tolist()})
 
     result.append({
         "qmof_id": qmof_id,
@@ -80,7 +92,7 @@ for i in range(len(mofs)):
 
 # write atom weights
 weights_obj = json.dumps(weights, indent=4)
-with open("files/peak_output", "w") as file:
+with open("files/peak_output.json", "w") as file:
     file.write(weights_obj)
 
 # write peak to qmof.json
